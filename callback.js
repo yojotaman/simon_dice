@@ -35,6 +35,24 @@ function onError(id) {
 
 obtenerPokemon(1)
     .then(function(poke) {
-        console.log(`Hola soy el pokemon  ${poke.name}`);
+        console.log(`Hola soy el pokemon ${poke.name}`);
+        return obtenerPokemon(2)
+    })
+    .then(function(poke) {
+        console.log(`Hola soy el pokemon ${poke.name}`);
+        return obtenerPokemon(3)
+    })
+    .then(function(poke) {
+        console.log(`Hola soy el pokemon ${poke.name}`);
+        debugger
+        return obtenerPokemon(4)
+    })
+    .then(function(poke) {
+        console.log(`Hola soy el pokemon ${poke.name}`);
+        return obtenerPokemon(5)
+    })
+    .then(function(poke) {
+        console.log(`Hola soy el pokemon ${poke.name}`);
+        // return obtenerPokemon()
     })
     .catch(onError)
