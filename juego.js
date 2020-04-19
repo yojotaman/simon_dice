@@ -1,27 +1,39 @@
+// const Swal = require('sweetalert2')
+
 const celeste = document.getElementById('celeste')
 const violeta = document.getElementById('violeta')
 const naranja = document.getElementById('naranja')
 const verde = document.getElementById('verde')
 const btnEmpezar = document.getElementById('btnEmpezar')
-const ULTIMO_NIVEL = 10
+const ULTIMO_NIVEL = 2
+
 
 class Juego {
     constructor() {
-        this.siguienteNivel = this.siguienteNivel.bind(this)
-        this.elegirColor = this.elegirColor.bind(this)
         this.inicializar()
         this.generarSecuencia()
         setTimeout(this.siguienteNivel, 500)
     }
 
     inicializar() {
-        btnEmpezar.classList.add('hide')
+        this.siguienteNivel = this.siguienteNivel.bind(this)
+        this.elegirColor = this.elegirColor.bind(this)
+            // btnEmpezar.classList.add('hide')
+        this.toggleBtnEmpezar()
         this.nivel = 1
         this.colores = {
             celeste,
             violeta,
             naranja,
             verde
+        }
+    }
+
+    toggleBtnEmpezar() {
+        if (btnEmpezar.classList.contains('hide')) {
+            btnEmpezar.classList.remove('hide')
+        } else {
+            btnEmpezar.classList.add('hide')
         }
     }
 
@@ -100,6 +112,22 @@ class Juego {
         this.colores.verde.removeEventListener('click', this.elegirColor)
     }
 
+    ganoElJuego() {
+        swal.fire('Simon dice', 'Felicitaciones, ganaste el juego', 'success')
+            .then(() => {
+                // this.eliminarEventosClick()
+                this.inicializar()
+            })
+    }
+
+    perdioElJuego() {
+        swal.fire('Simon dice', 'Lo siento, perdiste :(', 'error')
+            .then(() => {
+                this.eliminarEventosClick()
+                this.inicializar()
+            })
+    }
+
     elegirColor(ev) {
         // console.log(ev);
         const nombreColor = ev.target.dataset.color
@@ -111,7 +139,7 @@ class Juego {
                     this.nivel++
                         this.eliminarEventosClick()
                     if (this.nivel === (ULTIMO_NIVEL + 1)) {
-                        // GANÓ
+                        this.ganoElJuego()
                     } else {
                         setTimeout(this.siguienteNivel, 1500)
 
@@ -119,7 +147,7 @@ class Juego {
 
                 }
         } else {
-            // perdió
+            this.perdioElJuego()
         }
     }
 
